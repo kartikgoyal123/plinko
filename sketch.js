@@ -5,29 +5,25 @@ const Constraint = Matter.Constraint;
 
 var engine, world;
 var ground;
-
+var score =0;
 var division = [];
 var particle = [];
 var plinkos = [];
 
-var divisionheight=300;
+var divisionHeight=300;
 
 
 
 function setup() {
-  createCanvas(480,800);
+  createCanvas(800,800);
   engine = Engine.create();
   world = engine.world;
 
-  ground = new Ground(240,height,480,20);
+  ground = new Ground(width/2,height,width,20);
 
-}
-
-function draw() {
-  background(0);  
   
  for (var k = 0; k <=width;k = k + 80) {
-    division.push(new Division(k, height-divisionheight/2,10,divisionheight));
+    division.push(new Division(k, height-divisionHeight/2,10,divisionHeight));
  }
 
  for (var j = 40; j <=width;j = j + 50) {
@@ -42,17 +38,29 @@ function draw() {
  for (var j = 15; j <=width-30;j = j + 50) {
   plinkos.push(new Plinkos(j,375));
 }
+}
+function draw() {
+  background("black");
+  textSize(20) 
   
   Engine.update(engine);
 
   ground.display();
 
-  for (var k = 0; k < division.length; k++ ){
+  for (var k = 0; k < plinkos.length; k++ ){
 
-    division[k].display();
+    plinkos[k].display();
   }
-  for (var j = 0; j < division.length; j++ ){
+  if(frameCount%60===0){
+    particle.push(new Particle(random(width/2-30, width/2+30), 10,10));
+    score++;
+  }
+  for (var j = 0; j < particle.length; j++ ){
 
     particle[j].display();
+  }
+  for (var k = 0; k < division.length; k++) {
+     
+    division[k].display();
   }
 }
